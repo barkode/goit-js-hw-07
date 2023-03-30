@@ -18,21 +18,21 @@ gallery.addEventListener("click", openOriginImage);
 
 function openOriginImage(event) {
   event.preventDefault();
-  const ifExistClass = event.target.classList.contains("gallery__image");
-  if (ifExistClass) {
-    const originalImagePath = event.target.dataset.source;
-    const instance =
-      basicLightbox.create(`<img src="${originalImagePath}" width="800" height="600">
+  if (event.target.nodeName !== "IMG") {
+    return;
+  }
+  const originalImagePath = event.target.dataset.source;
+  const instance =
+    basicLightbox.create(`<img src="${originalImagePath}" width="800" height="600">
    `);
-    instance.show();
+  instance.show();
 
-    gallery.addEventListener("keydown", closeModalWindowEsc);
+  gallery.addEventListener("keydown", closeModalWindowEsc);
 
-    function closeModalWindowEsc(event) {
-      if (event.code === "Escape") {
-        instance.close();
-        gallery.removeEventListener("keydown", closeModalWindowEsc);
-      }
+  function closeModalWindowEsc(event) {
+    if (event.code === "Escape") {
+      instance.close();
+      gallery.removeEventListener("keydown", closeModalWindowEsc);
     }
   }
 }
